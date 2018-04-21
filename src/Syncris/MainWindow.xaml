@@ -1,0 +1,147 @@
+﻿<Window x:Class="Syncris.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:local="clr-namespace:Syncris"
+        xmlns:mvm="clr-namespace:Syncris.Core"
+        xmlns:util="clr-namespace:Syncris.Util"
+        mc:Ignorable="d"
+        Title="Syncris" Height="350" Width="525" Closed="Window_Closed" Closing="Window_Closing">
+    <Window.DataContext>
+        <mvm:MainViewModel></mvm:MainViewModel>
+    </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="AddFiles">
+            <ei:CallMethodAction MethodName="OnAddFiles" TargetObject="{Binding}"></ei:CallMethodAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <TabControl>
+            
+            <TabItem Header="Contents">
+                <Grid>
+                    <DataGrid Margin="10,35,10,10" ItemsSource="{Binding Path=Targets}" IsReadOnly="true" AutoGenerateColumns="False"
+                              Drop="DataGrid_Drop" AllowDrop="True">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Sync">
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsSync}" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource ErrorCellBankgroundColor}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=IsSync}" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource ValidCellBackgroundColor}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTemplateColumn Header="From">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=SrcFileName}" ToolTipService.ToolTip="{Binding Path=SrcFilePath}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTemplateColumn Header="To">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=DstFileName}" ToolTipService.ToolTip="{Binding Path=DstFilePath}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTemplateColumn IsReadOnly="True" Header="Timestamp(src)">
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsSync}" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource ErrorCellBankgroundColor}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Path=SrcTimestamp}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTemplateColumn IsReadOnly="True" Header="Timestamp(dst)">
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsSync}" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource ErrorCellBankgroundColor}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Path=DstTimestamp}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- 未実装
+                            <DataGridTextColumn IsReadOnly="True" Header="Last Sync" Binding="{Binding Path=LastSync}"></DataGridTextColumn>
+                            -->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Auto Assign" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=AutoAssignCommand}"/>
+                    <Button Content="Refresh" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=RefreshCommand}"/>
+                    <Button Content="Manual Sync" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=SyncAllCommand}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Control">
+                <Grid>
+                    <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=StartCommand}"/>
+                    <Button Content="Stop" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Path=StopCommand}"/>
+                    <Button Content="Load" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Width="75">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <util:LoadButtonAction LoadFunc="LoadFromFile" TargetObject="{Binding}"></util:LoadButtonAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Content="Save" HorizontalAlignment="Left" Margin="90,47,0,0" VerticalAlignment="Top" Width="75">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <util:SaveButtonAction SaveFunc="SaveToFile" TargetObject="{Binding}"></util:SaveButtonAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Label HorizontalAlignment="Left" Margin="170,7,0,0" VerticalAlignment="Top" Width="81">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=PollingThread.IsRunning}" Value="False">
+                                        <Setter Property="Background" Value="{StaticResource ErrorCellBankgroundColor}" />
+                                        <Setter Property="Content" Value="Waiting"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=PollingThread.IsRunning}" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource ValidCellBackgroundColor}" />
+                                        <Setter Property="Content" Value="Running"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>
