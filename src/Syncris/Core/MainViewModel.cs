@@ -12,11 +12,23 @@ using System.Windows.Input;
 
 namespace Syncris.Core
 {
-    public class MainViewModel:IDisposable
+    public class MainViewModel:BindableBase, IDisposable
     {
         public TargetCollection Targets { get; } = new TargetCollection();
 
-        public string TargetRootPath { get; set; } = Properties.Settings.Default.DefaultTargetRootPath;
+
+        private string m_TargetRootPath= Properties.Settings.Default.DefaultTargetRootPath;
+        public string TargetRootPath
+        {
+            get
+            {
+                return m_TargetRootPath;
+            }
+            set
+            {
+                SetProperty(ref m_TargetRootPath, value);
+            }
+        }
 
         public string LoadedDataPath { get; set; }
 

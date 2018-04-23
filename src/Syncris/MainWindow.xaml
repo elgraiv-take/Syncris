@@ -23,7 +23,7 @@
     </i:Interaction.Triggers>
     <Grid>
         <TabControl>
-            
+
             <TabItem Header="Contents">
                 <Grid>
                     <DataGrid x:Name="WatchList" Margin="10,35,10,10" ItemsSource="{Binding Path=Targets}" IsReadOnly="true" AutoGenerateColumns="False"
@@ -48,7 +48,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
+
                             <DataGridTemplateColumn Header="From">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -56,7 +56,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
+
                             <DataGridTemplateColumn Header="To">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -64,7 +64,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
+
                             <DataGridTemplateColumn IsReadOnly="True" Header="Timestamp(src)">
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
@@ -81,7 +81,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
+
                             <DataGridTemplateColumn IsReadOnly="True" Header="Timestamp(dst)">
                                 <DataGridTemplateColumn.CellStyle>
                                     <Style TargetType="DataGridCell">
@@ -143,9 +143,11 @@
                             </Style>
                         </Label.Style>
                     </Label>
+                    <TextBox Height="23" Margin="10,101,103,0" TextWrapping="Wrap" Text="{Binding Path=TargetRootPath}" VerticalAlignment="Top"/>
+                    <Label Content="Target Root Path" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        
+
     </Grid>
 </Window>
