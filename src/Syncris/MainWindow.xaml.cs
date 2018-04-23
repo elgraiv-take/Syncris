@@ -48,11 +48,15 @@ namespace Syncris
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            e.Cancel = true;
+            /*
             var result=MessageBox.Show("終了", "終了しますか？", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes)
             {
                 e.Cancel = true;
             }
+            */
+            Hide();
         }
 
         private void DataGrid_KeyDown(object sender, KeyEventArgs e)

@@ -13,5 +13,16 @@ namespace Syncris
     /// </summary>
     public partial class App : Application
     {
+        private NotifyIcon m_notifyIcon;
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            m_notifyIcon.Dispose();
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            m_notifyIcon = new NotifyIcon();
+        }
     }
 }
