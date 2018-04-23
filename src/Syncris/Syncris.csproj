@@ -63,6 +63,8 @@
     </ApplicationDefinition>
     <Compile Include="Core\Json\Data.cs" />
     <Compile Include="Core\UpdateWatcher.cs" />
+    <Compile Include="DataGridEventArgs.cs" />
+    <Compile Include="FileListEventArgs.cs" />
     <Compile Include="Util\BindableBase.cs" />
     <Compile Include="Util\DelegateCommand.cs" />
     <Compile Include="Util\LoadButtonAction.cs" />
@@ -71,7 +73,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddFilesArgs.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

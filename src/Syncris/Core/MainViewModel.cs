@@ -42,13 +42,24 @@ namespace Syncris.Core
             //m_polling.Start();
         }
 
-        public void OnAddFiles(object sender,AddFilesArgs e)
+        public void OnAddFiles(object sender,FileListEventArgs e)
         {
             foreach(var file in e.Files)
             {
                 var newTarget = new CopyTarget() { SrcFilePath = file };
                 newTarget.RefreshTimestamp();
                 Targets.Add(newTarget);
+            }
+        }
+
+        public void OnRemoveFiles(object sender, DataGridEventArgs e)
+        {
+            foreach (var item in e.TargetItems)
+            {
+                if(item is CopyTarget target)
+                {
+                    Targets.Remove(target);
+                }
             }
         }
 

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Syncris
 {
-    public class AddFilesArgs:EventArgs
+    public class FileListEventArgs:EventArgs
     {
         public string[] Files { get; }
-        public AddFilesArgs(string[] files)
+        public FileListEventArgs(string[] files)
         {
             Files = files;
         }

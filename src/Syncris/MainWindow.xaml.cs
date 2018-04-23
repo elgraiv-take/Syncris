@@ -25,7 +25,8 @@ namespace Syncris
             InitializeComponent();
         }
 
-        public event EventHandler<AddFilesArgs> AddFiles;
+        public event EventHandler<FileListEventArgs> AddFiles;
+        public event EventHandler<DataGridEventArgs> RemoveFiles;
 
         private void DataGrid_Drop(object sender, DragEventArgs e)
         {
@@ -34,7 +35,7 @@ namespace Syncris
             {
                 return;
             }
-            AddFiles?.Invoke(this, new AddFilesArgs(files));
+            AddFiles?.Invoke(this, new FileListEventArgs(files));
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -53,5 +54,21 @@ namespace Syncris
                 e.Cancel = true;
             }
         }
+
+        private void DataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                var selected=WatchList.SelectedItems.Cast<object>().ToArray();
+                e.Handled = true;
+                var result = MessageBox.Show("削除", "選択された要素をしますか？", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+                RemoveFiles?.Invoke(this, new DataGridEventArgs(selected));
+            }
+        }
+        
     }
 }

@@ -14,6 +14,9 @@
         <mvm:MainViewModel></mvm:MainViewModel>
     </Window.DataContext>
     <i:Interaction.Triggers>
+        <i:EventTrigger EventName="RemoveFiles">
+            <ei:CallMethodAction MethodName="OnRemoveFiles" TargetObject="{Binding}"></ei:CallMethodAction>
+        </i:EventTrigger>
         <i:EventTrigger EventName="AddFiles">
             <ei:CallMethodAction MethodName="OnAddFiles" TargetObject="{Binding}"></ei:CallMethodAction>
         </i:EventTrigger>
@@ -23,8 +26,9 @@
             
             <TabItem Header="Contents">
                 <Grid>
-                    <DataGrid Margin="10,35,10,10" ItemsSource="{Binding Path=Targets}" IsReadOnly="true" AutoGenerateColumns="False"
-                              Drop="DataGrid_Drop" AllowDrop="True">
+                    <DataGrid x:Name="WatchList" Margin="10,35,10,10" ItemsSource="{Binding Path=Targets}" IsReadOnly="true" AutoGenerateColumns="False"
+                              Drop="DataGrid_Drop" AllowDrop="True" CanUserAddRows="False" CanUserDeleteRows="True" PreviewKeyDown="DataGrid_KeyDown">
+
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Sync">
                                 <DataGridTemplateColumn.CellStyle>
