@@ -71,7 +71,7 @@ namespace Syncris.Util
                 return;
             }
             
-            string path = m_dialog.SafeFileName;
+            string path = m_dialog.FileName;
             var taskRsult = await Task.Run(() => {
                 var result = method.Invoke(target, new object[] { path });
                 if (result is bool boolResult)
